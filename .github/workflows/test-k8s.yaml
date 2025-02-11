@@ -1,0 +1,26 @@
+name: Test Kubernetes on Docker Desktop
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-k8s:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up kubeconfig
+      run: |
+        echo "${{ secrets.KUBECONFIG }}" > kubeconfig.yaml
+        export KUBECONFIG=$(pwd)/kubeconfig.yaml
+
+    - name: Verify Kubernetes Access
+      run: |
+        kubectl cluster-info
+        kubectl get nodes
+        kubectl get pods --all-namespaces
+

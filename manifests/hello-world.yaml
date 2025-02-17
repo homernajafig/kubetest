@@ -3,20 +3,21 @@ kind: Deployment
 metadata:
   name: hello-world
 spec:
-  replicas: 2
   selector:
     matchLabels:
-      app: hello-world
+      app: nginx
+  replicas: 2
   template:
     metadata:
       labels:
-        app: hello-world
+        app: nginx
     spec:
       containers:
-      - name: hello-world
-        image: nginx
+      - name: nginx
+        image: nginx:1.14.2
         ports:
-        - containerPort: 8080
+        - containerPort: 80
+
 ---
 apiVersion: v1
 kind: Service
